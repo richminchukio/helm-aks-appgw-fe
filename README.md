@@ -25,9 +25,11 @@ helm package .
 # helm repo index . --url https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/
 rm -r charts/
 helm repo index . --merge index.yaml --url https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/
+# fix tar.gz
+helm dep update
 git add *
 git commit -m ""
 git tag aks-appgw-fe-$(yq eval '.version' Chart.yaml)
-git push --follow-tags
+git push --all
 helm repo update
 ```
