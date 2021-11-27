@@ -14,5 +14,5 @@ dependencies:
   repository: "https://charts.jetstack.io/"
 sources:
   - https://github.com/richminchukio/helm-aks-appgw-fe
-version: 0.1.3
+version: 0.1.4
 appVersion: latest
