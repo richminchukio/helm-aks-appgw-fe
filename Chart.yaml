@@ -1,0 +1,8 @@
+apiVersion: v2
+name: aks-appgw-fe
+description: A helm chart to create an SSL terminated at Azure Application Gateway front end container in Azure Kubernetes Service
+type: application
+sources:
+  - https://github.com/richminchukio/helm-aks-appgw-fe
+version: 0.1.0
+appVersion: latest

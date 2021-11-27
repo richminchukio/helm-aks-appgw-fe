@@ -1,0 +1,41 @@
+{{- $fullName := include "aks-appgw-fe.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "aks-appgw-fe.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    cert-manager.io/issuer: {{ .Values.issuer.aksappgwfe.metadata.name }}
+    cert-manager.io/acme-challenge-type: {{ .Values.ingress.aksappgwfe.certManager.acmeChallengeType }}
+    # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
+    appgw.ingress.kubernetes.io/connection-draining: {{ .Values.ingress.aksappgwfe.appgw.connectionDraining }}
+    appgw.ingress.kubernetes.io/connection-draining-timeout: {{ .Values.ingress.aksappgwfe.appgw.connectionDrainingTimeout }}
+    appgw.ingress.kubernetes.io/cookie-based-affinity: {{ .Values.ingress.aksappgwfe.appgw.cookieBasedAffinity }}
+spec:
+  tls:
+    - hosts:
+      - {{ .Values.ingress.aksappgwfe.host }}
+      secretName: "issuer-account-key-tls-{{ $fullName }}"
+  rules:
+    - host: {{ .Values.ingress.aksappgwfe.host }}
+      http:
+        paths:
+        - path: {{ .Values.ingress.aksappgwfe.path }}
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $fullName }}
+              port:
+                number: {{ $svcPort }}
+    - http:
+        paths:
+        - path: {{ .Values.ingress.aksappgwfe.path }}
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ $fullName }}
+              port:
+                number: {{ $svcPort }}

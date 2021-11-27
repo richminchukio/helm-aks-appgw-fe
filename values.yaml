@@ -1,0 +1,129 @@
+# Default values for aks-appgw-fe.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+# -- deployment --
+
+aadpodidbinding: "" # tf-rmio-preview-agic-BLUEGREENREPLACE-azid-ingress-azure
+
+env:
+  # - name: key
+  #   value: val
+  
+replicaCount: 2
+
+image:
+  repository: httpd
+  pullPolicy: Always
+  tag: ""
+
+imagePullSecrets: []
+
+# https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
+lifecycle:
+  preStop:
+    exec:
+      command: ["sleep", "90"]
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 80
+  periodSeconds: 4
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 80
+  periodSeconds: 4
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+
+# https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
+terminationGracePeriodSeconds: 101
+
+volumes:
+  # - name: config-volume
+  #   configMap:
+  #     name: config-name
+  # - name: secret-volume
+  #   secret:
+  #     secretName: secret-name
+
+volumeMounts:
+  # - name: config-volume
+  #   mountPath: /app/config
+  # - name: secret-volume
+  #   mountPath: /app/secret
+  #   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# -- issuer --
+# enable for first helm use, once in the cluster/for subsequent pods with different ingress paths, disable the issuer.
+
+issuer:
+  aksappgwfe:
+    acme:
+      email: "" # rjminchuk+rmioENVIRONMENTREPLACEBLUEGREENREPLACE@icloud.com
+      privateKeySecretRef:
+        name: issuer-account-key-staging
+      server: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      solvers:
+      - http01:
+          ingress:
+            class:  azure/application-gateway
+    enabled: true
+    metadata:
+      name: letsencrypt-staging
+
+# -- ingress --
+
+ingress:
+  aksappgwfe:
+    appgw:
+      # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
+      connectionDraining: "true"
+      connectionDrainingTimeout: "30"
+      cookie-based-affinity: "true"
+    certManager:
+      acmeChallengeType: http01
+    host: "" # HOSTREPLACE
+    path: /

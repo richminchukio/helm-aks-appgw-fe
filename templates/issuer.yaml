@@ -1,0 +1,20 @@
+{{- if .Values.issuer.enabled -}}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.issuer.aksappgwfe.metadata.name }}
+spec:
+  acme:
+    # Email address used for ACME registration
+    email: {{ .Values.issuer.aksappgwfe.acme.email }}
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: {{ .Values.issuer.aksappgwfe.acme.privateKeySecretRef.name }}
+    # The ACME server URL
+    server: {{ .Values.issuer.aksappgwfe.acme.server }}
+    # Enable the HTTP-01 challenge provider
+    {{- with .Values.issuer.aksappgwfe.acme.solvers }}
+    solvers:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+{{- end }}
