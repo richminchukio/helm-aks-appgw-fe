@@ -122,7 +122,7 @@ ingress:
       # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
       connectionDraining: "true"
       connectionDrainingTimeout: "30"
-      cookie-based-affinity: "true"
+      cookieBasedAffinity: "true"
     certManager:
       acmeChallengeType: http01
     host: "" # HOSTREPLACE
