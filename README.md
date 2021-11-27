@@ -31,5 +31,6 @@ git add *
 git commit -m ""
 git tag aks-appgw-fe-$(yq eval '.version' Chart.yaml)
 git push --all
+git push --tags
 helm repo update
 ```
