@@ -4,5 +4,5 @@ description: A helm chart to create an SSL terminated at Azure Application Gatew
 type: application
 sources:
   - https://github.com/richminchukio/helm-aks-appgw-fe
-version: 0.1.0
+version: 0.1.1
 appVersion: latest
