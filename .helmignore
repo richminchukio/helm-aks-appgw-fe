@@ -23,3 +23,6 @@
 .vscode/
 index.yaml
 publish-notes.md
+CHANGELOG.md
+CODEOWNERS
+CONTRIBUTING.md
