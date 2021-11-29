@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ["https://{{ .Values.ingress.aksappgwfe.host}}{{ .Values.ingress.aksappgwfe.path }}"]
+      args: ["https://{{ .Values.ingress.host}}{{ .Values.ingress.path }}"]
   restartPolicy: Never

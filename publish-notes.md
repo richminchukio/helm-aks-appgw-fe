@@ -1,6 +1,7 @@
 ```sh
 vi Chart.yaml # bump version
 helm dep update
+rm aks-appgw-fe-*.tgz
 helm package .
 # helm repo index . --url https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/
 rm -r charts/

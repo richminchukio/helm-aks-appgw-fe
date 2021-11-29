@@ -8,22 +8,22 @@ metadata:
     {{- include "aks-appgw-fe.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: azure/application-gateway
-    cert-manager.io/issuer: {{ .Values.issuer.aksappgwfe.metadata.name }}
-    cert-manager.io/acme-challenge-type: {{ .Values.ingress.aksappgwfe.certManager.acmeChallengeType }}
+    cert-manager.io/issuer: {{ .Values.issuer.metadata.name }}
+    cert-manager.io/acme-challenge-type: {{ .Values.ingress.certManager.acmeChallengeType }}
     # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
-    appgw.ingress.kubernetes.io/connection-draining: "{{ .Values.ingress.aksappgwfe.appgw.connectionDraining }}"
-    appgw.ingress.kubernetes.io/connection-draining-timeout: "{{ .Values.ingress.aksappgwfe.appgw.connectionDrainingTimeout }}"
-    appgw.ingress.kubernetes.io/cookie-based-affinity: "{{ .Values.ingress.aksappgwfe.appgw.cookieBasedAffinity }}"
+    appgw.ingress.kubernetes.io/connection-draining: "{{ .Values.ingress.appgw.connectionDraining }}"
+    appgw.ingress.kubernetes.io/connection-draining-timeout: "{{ .Values.ingress.appgw.connectionDrainingTimeout }}"
+    appgw.ingress.kubernetes.io/cookie-based-affinity: "{{ .Values.ingress.appgw.cookieBasedAffinity }}"
 spec:
   tls:
     - hosts:
-      - {{ .Values.ingress.aksappgwfe.host }}
+      - {{ .Values.ingress.host }}
       secretName: "issuer-account-key-tls-{{ $fullName }}"
   rules:
-    - host: {{ .Values.ingress.aksappgwfe.host }}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
-        - path: {{ .Values.ingress.aksappgwfe.path }}
+        - path: {{ .Values.ingress.path }}
           pathType: Prefix
           backend:
             service:
@@ -32,7 +32,7 @@ spec:
                 number: {{ $svcPort }}
     - http:
         paths:
-        - path: {{ .Values.ingress.aksappgwfe.path }}
+        - path: {{ .Values.ingress.path }}
           pathType: Prefix
           backend:
             service:

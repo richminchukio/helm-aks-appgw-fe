@@ -97,33 +97,31 @@ affinity: {}
 # enable for first helm use, once in the cluster/for subsequent pods with different ingress paths, disable the issuer.
 
 issuer:
-  aksappgwfe:
-    acme:
-      email: ""
-      privateKeySecretRef:
-        name: issuer-account-key-staging
-      server: "https://acme-staging-v02.api.letsencrypt.org/directory"
-      solvers:
-      - http01:
-          ingress:
-            class:  azure/application-gateway
-    enabled: true
-    metadata:
-      name: letsencrypt-staging
+  acme:
+    email: ""
+    privateKeySecretRef:
+      name: issuer-account-key-staging
+    server: "https://acme-staging-v02.api.letsencrypt.org/directory"
+    solvers:
+    - http01:
+        ingress:
+          class:  azure/application-gateway
+  enabled: true
+  metadata:
+    name: letsencrypt-staging
 
 # -- ingress --
 
 ingress:
-  aksappgwfe:
-    appgw:
-      # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
-      connectionDraining: "true"
-      connectionDrainingTimeout: "30"
-      cookieBasedAffinity: "true"
-    certManager:
-      acmeChallengeType: http01
-    host: "" # your Azure Public IP address DNS name
-    path: /
+  appgw:
+    # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
+    connectionDraining: "true"
+    connectionDrainingTimeout: "30"
+    cookieBasedAffinity: "true"
+  certManager:
+    acmeChallengeType: http01
+  host: "" # your Azure Public IP address DNS name
+  path: /
 
 # -- configmap --
 configmap:
