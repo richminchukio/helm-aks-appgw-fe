@@ -1,6 +1,6 @@
 # aks-appgw-fe
 
-publish steps
+deploy notes
 
 ```sh
 helm install httpd-chart ./ \
@@ -18,19 +18,4 @@ helm install httpd-chart ./ \
   --set ingress-azure.rbac.enabled=true \
   --set cert-manager.installCRDS=true \
   --set cert-manager.startupapicheck.enabled=false
-
-vi Chart.yaml # bump version
-helm dep update
-helm package .
-# helm repo index . --url https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/
-rm -r charts/
-helm repo index . --merge index.yaml --url https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/
-# fix tar.gz
-helm dep update
-git add *
-git commit -m ""
-git tag aks-appgw-fe-$(yq eval '.version' Chart.yaml)
-git push --all
-git push --tags
-helm repo update
 ```

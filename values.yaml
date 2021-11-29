@@ -124,3 +124,13 @@ ingress:
       acmeChallengeType: http01
     host: "" # your Azure Public IP address DNS name
     path: /
+
+# -- configmap --
+configmap:
+  enabled: false
+  data: {}
+
+# -- secret --
+secret:
+  enabled: false
+  stringData: {}

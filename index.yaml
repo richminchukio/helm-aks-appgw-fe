@@ -3,7 +3,30 @@ entries:
   aks-appgw-fe:
   - apiVersion: v2
     appVersion: latest
-    created: "2021-11-27T14:08:06.332378-06:00"
+    created: "2021-11-28T22:49:49.772238-06:00"
+    dependencies:
+    - name: aad-pod-identity
+      repository: https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+      version: ~4
+    - name: ingress-azure
+      repository: https://appgwingress.blob.core.windows.net/ingress-azure-helm-package
+      version: ~1
+    - name: cert-manager
+      repository: https://charts.jetstack.io/
+      version: ~1
+    description: A helm chart to create an SSL terminated at Azure Application Gateway
+      front end container in Azure Kubernetes Service
+    digest: 16bcedd2753de2bd49f8e50ece0094aa1e9eb3acaa5bb7a93b9fb1070d23dfc2
+    name: aks-appgw-fe
+    sources:
+    - https://github.com/richminchukio/helm-aks-appgw-fe
+    type: application
+    urls:
+    - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-0.2.0.tar.gz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: latest
+    created: "2021-11-28T22:49:49.753739-06:00"
     dependencies:
     - name: aad-pod-identity
       repository: https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
@@ -22,7 +45,7 @@ entries:
     - https://github.com/richminchukio/helm-aks-appgw-fe
     type: application
     urls:
-    - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-0.1.5.tar.gz
+    - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-0.1.5.tgz
     version: 0.1.5
   - apiVersion: v2
     appVersion: latest
@@ -109,4 +132,4 @@ entries:
     urls:
     - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-0.1.0.tar.gz
     version: 0.1.0
-generated: "2021-11-27T14:08:06.307518-06:00"
+generated: "2021-11-28T22:49:49.733461-06:00"
