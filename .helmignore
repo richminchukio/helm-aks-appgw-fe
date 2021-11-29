@@ -22,3 +22,4 @@
 *.tmproj
 .vscode/
 index.yaml
+publish-notes.md
