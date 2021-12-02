@@ -26,8 +26,8 @@ entries:
     - https://github.com/richminchukio/helm-aks-appgw-fe
     type: application
     urls:
-    - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-1.0.0.tar.gz
-    version: 1.0.0
+    - https://github.com/richminchukio/helm-aks-appgw-fe/archive/refs/tags/aks-appgw-fe-1.0.0-rc1.tar.gz
+    version: 1.0.0-rc1
   - apiVersion: v2
     appVersion: latest
     created: "2021-11-29T04:41:23.075491-06:00"
