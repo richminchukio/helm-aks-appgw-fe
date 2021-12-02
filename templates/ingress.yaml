@@ -18,7 +18,7 @@ spec:
   tls:
     - hosts:
       - {{ .Values.ingress.host }}
-      secretName: "issuer-account-key-tls-{{ $fullName }}"
+      secretName: "issuer-account-key-tls-{{ .Values.issuer.metadata.name }}"
   rules:
     - host: {{ .Values.ingress.host }}
       http:
