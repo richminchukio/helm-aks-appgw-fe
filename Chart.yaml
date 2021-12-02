@@ -24,4 +24,4 @@ name: aks-appgw-fe
 sources:
   - https://github.com/richminchukio/helm-aks-appgw-fe
 type: application
-version: 1.0.0
+version: 1.0.0-rc1
