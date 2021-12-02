@@ -135,7 +135,7 @@ ingress:
     cookieBasedAffinity: "true"
   certManager:
     acmeChallengeType: http01
-  host: "" # your Azure Public IP address DNS name
+  host: "" # your Azure Public IP address DNS name/your own DNS entry
   path: /
 
 # -- configmap --
