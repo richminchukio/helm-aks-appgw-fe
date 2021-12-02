@@ -1,18 +1,27 @@
 apiVersion: v2
-name: aks-appgw-fe
-description: A helm chart to create an SSL terminated at Azure Application Gateway front end container in Azure Kubernetes Service
-type: application
+appVersion: latest
+description: A helm chart to create an SSL terminated Azure Application Gateway front end container in Azure Kubernetes Service
+# dependencies:
+# - name: wrapper
+#   version: 0.1.0
+#   repository: file://wrapper
+#   condition: wrapper.enabled
 dependencies:
 - name: aad-pod-identity
-  version: "~4"
   repository: "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
+  version: "~4"
+  condition: aks-appgw-fe.aad-pod-identity.enabled
 - name: ingress-azure
-  version: "~1"
   repository: "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package"
-- name: cert-manager
   version: "~1"
+  condition: aks-appgw-fe.ingress-azure.enabled
+- name: cert-manager
   repository: "https://charts.jetstack.io/"
+  version: "~1"
+  condition: aks-appgw-fe.cert-manager.enabled
+kubeVersion: ">= 1.19 < 1.22" # ingress-azure chart does not support CRDs in k8s 1.22+ yet, and richminchukio/aks-appgw-fe does not support networking.k8s.io/v1beta1 ingress, only networking.k8s.io/v1 ingress available in k8s 1.19+
+name: aks-appgw-fe
 sources:
   - https://github.com/richminchukio/helm-aks-appgw-fe
+type: application
 version: 1.0.0
-appVersion: latest

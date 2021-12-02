@@ -1,0 +1,13 @@
+aks-appgw-fe:
+  aad-pod-identity:
+    enabled: false
+  cert-manager:
+    enabled: false
+  ingress-azure:
+    enabled: false
+
+issuer:
+  enabled: false # disable the recreation of the cert-manager.io/Issuer resource:
+
+ingress:
+  path: /subpath # set the new ingress path:

@@ -1,6 +1,22 @@
-# Default values for aks-appgw-fe.
-# This is a YAML-formatted file.
+aks-appgw-fe:
+  aad-pod-identity:
+    enabled: true
+  cert-manager:
+    enabled: true
+    installCRDs: false # cert-manager dependent chart does not support helm3 CRDs folder standard (IE: parent chart resources are created before CRDs.. that's bad), so you must manually install CRDs first. Check README.MD for more
+    startupapicheck:
+      enabled: false # cert manager dependent chart does not start without issues, so disable by this by default
+  ingress-azure:
+    appgw:
+      usePrivateIP: false
+      shared: false
+    armAuth:
+      type: aadPodIdentity
+    enabled: true
+    rbac:
+      enabled: true
 
+# Default values for aks-appgw-fe chart.
 nameOverride: ""
 fullnameOverride: ""
 
@@ -94,24 +110,23 @@ tolerations: []
 affinity: {}
 
 # -- issuer --
-# enable for first helm use, once in the cluster/for subsequent pods with different ingress paths, disable the issuer.
+# enable for first helm use, once in the cluster/for subsequent pods with different ingress paths, disable recreation of the Issuer resource.
 
 issuer:
   acme:
-    email: ""
+    email: "" # Your email for the ingress-azure helm chart dependency
     privateKeySecretRef:
-      name: issuer-account-key-staging
-    server: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      name: issuer-account-key-staging # we default the name of the cert-manager helm chart secret to staging in case you want to reuse the module for prod. Just change to issuer-account-key-prod
+    server: "https://acme-staging-v02.api.letsencrypt.org/directory" # The letsencrypt.org staging server for the cert-manager helm chart. change to prod url for prod certs
     solvers:
     - http01:
         ingress:
-          class:  azure/application-gateway
+          class: azure/application-gateway # the solver http class for the issuer CRD created by the cert-manager dependant helm chart
   enabled: true
   metadata:
     name: letsencrypt-staging
 
 # -- ingress --
-
 ingress:
   appgw:
     # https://github.com/Azure/application-gateway-kubernetes-ingress/blob/master/docs/how-tos/minimize-downtime-during-deployments.md
