@@ -1,8 +1,11 @@
-# aks-appgw-fe
+# richminchukio/aks-appgw-fe helm chart deploy notes
 
-deploy notes
+Due to [existing deficiencies in dependent charts](https://github.com/jetstack/cert-manager/issues/4613#issuecomment-982906448) you must first manually apply Cert-Manager CRDs.
 
 ```sh
+# because.. reasons
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.crds.yaml
+
 helm install httpd-chart ./ \
   --set issuer.enabled=true \
   --set ingress.host=************** \

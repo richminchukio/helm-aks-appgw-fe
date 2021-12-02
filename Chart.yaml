@@ -1,11 +1,6 @@
 apiVersion: v2
 appVersion: latest
 description: A helm chart to create an SSL terminated Azure Application Gateway front end container in Azure Kubernetes Service
-# dependencies:
-# - name: wrapper
-#   version: 0.1.0
-#   repository: file://wrapper
-#   condition: wrapper.enabled
 dependencies:
 - name: aad-pod-identity
   repository: "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
